@@ -1,8 +1,20 @@
 # LineRegionFix
 
-> LSPosed 模块：仅作用于 LINE（`jp.naver.line.android`），把客户端能读到的设备地区信号统一伪装成日本（SIM/网络国家码 jp、运营商 44010 NTT DOCOMO、时区 Asia/Tokyo、语言地区 ja_JP），并记录 LINE 实际查询了哪些信号。已实测：启用后 LINE 的地区拦截报错（VrkKJ_64）消失、进入后续验证流程。注意：它只能处理客户端信号，服务器按账号注册国做的判定改不了。
+> LSPosed 模块：仅作用于 LINE（`jp.naver.line.android`），把客户端能读到的设备地区信号伪装成所选地区，并记录 LINE 实际查询了哪些信号。已实测：启用后 LINE 的地区拦截报错（VrkKJ_64）消失、进入后续验证流程。注意：它只能处理客户端信号，服务器按账号注册国做的判定改不了。
 >
 > 成品 APK 在本仓库的 Releases 里，可直接下载安装。
+
+## 配置界面（v3.0 起）
+
+装好后桌面有 LineRegionFix 图标，打开就是设置页（仿 Nrfr 布局）：
+
+- **选择 SIM 卡**：全部 SIM / SIM 1 / SIM 2（作用于带槽位参数的运营商查询）
+- **选择国家码**：日本 / 韩国 / 台湾 / 香港 / 泰国 / 美国 / 德国
+- **选择运营商**：随国家联动的运营商列表（MCC+MNC 写死在预设里，如日本 NTT DOCOMO 44010、au 44007、SoftBank 44020）
+- 时区与语言地区随国家自动配套（如日本 = Asia/Tokyo + ja_JP）
+- 「还原设置」回到默认日本；「保存生效」写入配置，强停 LINE 重开后生效
+
+没打开过设置页时，默认就是日本 / NTT DOCOMO（与 v1、v2 行为一致）。LINE 进程读到的生效配置会打进 LSPosed 日志（`LineRegionFix: config loaded -> ...`），可据此确认配置已被读取。
 
 An LSPosed module that spoofs client-side device-region signals in LINE (`jp.naver.line.android`) to Japan (JP) and logs queried signals for diagnostic analysis.
 
